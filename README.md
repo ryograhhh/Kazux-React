@@ -1,2 +1,2 @@
 # Kazux-React
-Web Project React BoostFb — PENDING
+Web Project React BoostFb — UPDATED V1.0
