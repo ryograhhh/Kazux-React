@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KazuX — Free Online Media Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+      @font-face {
+        font-family: 'CustomFont';
+        src: url('bold.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'CustomFont';
+        src: url('reg.otf') format('opentype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      :root {
+        --bg: #0a0a0a;
+        --fg: #fafafa;
+        --muted: #a1a1aa;
+        --card: #0f0f10;
+        --elev: #111113;
+        --border: #2a2a2e;
+        --ring: rgba(139, 92, 246, 0.55);
+        --purple: #8b5cf6;
+        --purple-press: #7c3aed;
+        --ok: #22c55e;
+        --danger: #ef4444;
+        --radius-xl: 18px;
+        --radius: 12px;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 10px 30px rgba(0, 0, 0, 0.3);
+        --sidebar-w: 280px;
+        --safe-top: env(safe-area-inset-top, 0px);
+        --glass: rgba(14, 14, 16, 0.72);
+        --glass-border: rgba(255, 255, 255, 0.08);
+      }
+      [data-theme="light"] {
+        --bg: #ffffff;
+        --fg: #0a0a0a;
+        --muted: #52525b;
+        --card: #ffffff;
+        --elev: #f7f7f8;
+        --border: #e4e4e7;
+        --ring: rgba(124, 58, 237, 0.55);
+        --purple: #7c3aed;
+        --purple-press: #6d28d9;
+        --ok: #16a34a;
+        --danger: #dc2626;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.12);
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(0, 0, 0, 0.06);
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: CustomFont, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+        color: var(--fg);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        letter-spacing: 0.2px;
+        text-rendering: optimizeLegibility;
+      }
+      .app {
+        display: grid;
+        grid-template-columns: var(--sidebar-w) 1fr;
+        min-height: 100dvh;
+        gap: clamp(6px, 1vw, 12px);
+      }
+      @media (max-width: 1200px) {
+        :root {
+          --sidebar-w: 260px;
+        }
+      }
+      @media (max-width: 960px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+      }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: calc(100dvh - var(--safe-top));
+        padding: clamp(14px, 2.2vw, 18px);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: linear-gradient(180deg, var(--card), var(--bg) 160%);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        margin: clamp(8px, 1vw, 12px);
+        box-shadow: var(--shadow);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--fg);
+        font-weight: 800;
+        font-size: clamp(16px, 1.6vw, 18px);
+        padding: 6px 8px;
+        border-radius: 12px;
+      }
+      .brand img {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        object-fit: contain;
+        display: block;
+      }
+      .tools-label {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        margin-top: 6px;
+        padding-left: 8px;
+      }
+      .nav {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        padding-left: 6px;
+      }
+      .nav a {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 10px;
+        padding: clamp(10px, 1.6vw, 12px);
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: var(--fg);
+        font-weight: 700;
+        line-height: 1;
+        overflow: hidden;
+        transform: translateZ(0);
+        cursor: pointer;
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      }
+      .nav a:hover {
+        transform: translateX(2px);
+        background: var(--elev);
+        border-color: var(--border);
+        box-shadow: inset 0 0 0 3px rgba(139, 92, 246, 0.14);
+      }
+      .nav a:active {
+        transform: translateX(1px) translateY(1px) scale(0.98);
+      }
+      .nav a[aria-current="true"] {
+        border-color: var(--border);
+        background: var(--elev);
+      }
+      .nav a[aria-current="true"]::after,
+      .nav a:hover::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: -1px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--purple), transparent);
+        background-size: 200% 100%;
+        animation: purpleFlow 2.2s linear infinite;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .ico {
+        width: clamp(16px, 5vw, 20px);
+        height: clamp(16px, 5vw, 20px);
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .ico-muted {
+        opacity: 0.85;
+      }
+      .nav-indicator {
+        position: absolute;
+        left: 0;
+        width: 4px;
+        height: 40px;
+        background: linear-gradient(180deg, var(--purple), transparent);
+        border-radius: 999px;
+        transform: translateY(0);
+        transition: transform 180ms cubic-bezier(.2, .8, .2, 1), height 180ms;
+      }
+      .ripple {
+        position: absolute;
+        border-radius: 999px;
+        transform: scale(0);
+        background: rgba(139, 92, 246, 0.18);
+        animation: ripple 600ms ease-out;
+        pointer-events: none;
+      }
+      @keyframes ripple {
+        to {
+          transform: scale(6);
+          opacity: 0;
+        }
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--glass);
+        backdrop-filter: saturate(120%) blur(14px);
+        -webkit-backdrop-filter: saturate(120%) blur(14px);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .topbar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--purple), transparent);
+        background-size: 200% 100%;
+        animation: purpleFlow 2.2s linear infinite;
+        opacity: 0.45;
+        pointer-events: none;
+      }
+      @keyframes purpleFlow {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+      .topbar .left,
+      .topbar .right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .top-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--elev);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg);
+      }
+      .top-status > .dot {
+        display: inline-block;
+        flex: 0 0 10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--ok);
+        position: relative;
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
+        animation: dotGlow 2s ease-out infinite;
+      }
+      .top-status > .dot::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 999px;
+        border: 2px solid var(--ok);
+        opacity: 0.5;
+        transform: scale(0.6);
+        animation: dotPulse 1.2s ease-out infinite;
+      }
+      .top-status > .dot.offline {
+        background: #71717a;
+        box-shadow: none;
+        animation: none;
+      }
+      .top-status > .dot.offline::after {
+        content: none;
+      }
+      @keyframes dotPulse {
+        0% {
+          opacity: 0.6;
+          transform: scale(0.6);
+        }
+        70% {
+          opacity: 0.12;
+          transform: scale(1.3);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.6);
+        }
+      }
+      @keyframes dotGlow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.08);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
+        }
+      }
+      @media (max-width: 960px) {
+        .sidebar {
+          display: none;
+        }
+      }
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--fg);
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      .icon-btn.round {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        backdrop-filter: saturate(120%) blur(8px);
+        -webkit-backdrop-filter: saturate(120%) blur(8px);
+      }
+      .icon-btn:active {
+        transform: translateY(1px) scale(0.98);
+      }
+      .focus-ring:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+        border-color: transparent;
+      }
+      .drawer {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: stretch;
+        justify-content: flex-start;
+        background: rgba(0, 0, 0, 0.72);
+        z-index: 1000;
+      }
+      .drawer.open {
+        display: flex;
+      }
+      .drawer-panel {
+        width: min(92vw, 360px);
+        height: 100%;
+        background: var(--bg);
+        border-right: 1px solid var(--border);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        overflow-y: auto;
+        transform: translateX(-8px);
+        animation: slideIn 0.18s ease-out forwards;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      }
+      @media (max-width: 960px) {
+        .drawer-panel {
+          width: 100vw;
+          height: 100dvh;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0.8;
+          transform: translateX(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 clamp(14px, 3.4vw, 24px);
+      }
+      main {
+        display: grid;
+        gap: clamp(22px, 2.6vw, 32px);
+      }
+      .hero {
+        padding-top: clamp(24px, 3vw, 36px);
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .hero-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--elev);
+      }
+      .headline {
+        font-size: clamp(28px, 6vw, 48px);
+        line-height: 1.05;
+        font-weight: 800;
+        margin: 12px 0 6px;
+        letter-spacing: -0.02em;
+        word-break: break-word;
+      }
+      .typing {
+        display: inline-block;
+        border-right: 2px solid var(--fg);
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: bottom;
+      }
+      .subcopy {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.6;
+        margin-top: 12px;
+      }
+      .tool-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: clamp(20px, 3vw, 28px);
+        box-shadow: var(--shadow);
+      }
+      .input-group {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .input-label {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--fg);
+        margin-bottom: 6px;
+      }
+      .input-field {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--elev);
+        color: var(--fg);
+        font-family: inherit;
+        font-size: 14px;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+      .input-field:focus {
+        outline: none;
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
+      }
+      .select-field {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--elev);
+        color: var(--fg);
+        font-family: inherit;
+        font-size: 14px;
+        cursor: pointer;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+      .select-field:focus {
+        outline: none;
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
+      }
+      .btn {
+        padding: 14px 24px;
+        border-radius: var(--radius);
+        border: 1px solid var(--purple);
+        background: var(--purple);
+        color: white;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 160ms ease, background 160ms ease;
+        width: 100%;
+      }
+      .btn:hover {
+        background: var(--purple-press);
+        transform: translateY(-1px);
+      }
+      .btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .result-box {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--elev);
+      }
+      .result-item {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--fg);
+        font-size: 14px;
+      }
+      .result-item:last-child {
+        border-bottom: none;
+      }
+      .result-label {
+        font-weight: 700;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .error-msg {
+        color: var(--danger);
+        padding: 12px;
+        border-radius: var(--radius);
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        margin-top: 12px;
+      }
+      .success-msg {
+        color: var(--ok);
+        padding: 12px;
+        border-radius: var(--radius);
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        margin-top: 12px;
+      }
+      .chips {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 6px;
+      }
+      @media (min-width: 700px) {
+        .chips {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .chip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 12px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .chip .tiny-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--purple);
+      }
+      details.faq {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        padding: 14px 16px;
+      }
+      details.faq summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      details.faq summary::-webkit-details-marker {
+        display: none;
+      }
+      details.faq summary .faq-ico {
+        width: clamp(16px, 5vw, 20px);
+        height: clamp(16px, 5vw, 20px);
+      }
+      details.faq p {
+        color: var(--muted);
+        margin: 10px 0 0;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 26px 0;
+      }
+      .footer {
+        display: grid;
+        gap: 12px;
+      }
+      .footer-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--fg);
+        text-decoration: none;
+        font-weight: 800;
+      }
+      .footer-brand img {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+      }
+      .footer-note {
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      .copyright {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      .spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" aria-label="Sidebar">
+        <a class="brand" href="/">
+          <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX logo">
+          <span>KazuX</span>
+        </a>
+        <div class="tools-label">Tools</div>
+        <nav class="nav" aria-label="Tools" id="sideNav">
+          <div class="nav-indicator" id="navIndicator" aria-hidden="true"></div>
+          <a href="/tiktok-downloader.html">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="download" class="ico"></i>
+              <span>TikTok Downloader</span>
+            </span>
+            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+          </a>
+          <a href="/" aria-current="true">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="heart" class="ico"></i>
+              <span>FB Auto React</span>
+            </span>
+            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+            <span class="sr-only">Current</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div>
+        <div class="topbar" role="toolbar" aria-label="Top bar">
+          <div class="left">
+            <button id="openDrawer" class="icon-btn focus-ring" aria-label="Open menu" aria-haspopup="dialog" aria-controls="mobileDrawer" aria-expanded="false">
+              <i data-lucide="menu" class="ico"></i>
+            </button>
+            <a class="brand" href="/" aria-label="KazuX">
+              <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX logo">
+              <span>KazuX</span>
+            </a>
+          </div>
+          <div class="right">
+            <div class="top-status" title="Service status">
+              <span id="topDot" class="dot" aria-hidden="true"></span>
+              <span id="topText">Online</span>
+            </div>
+            <button id="themeToggleTop" class="icon-btn focus-ring" aria-label="Switch theme" aria-pressed="false">
+              <i data-lucide="moon" class="ico"></i>
+            </button>
+          </div>
+        </div>
+
+        <main>
+          <section class="hero">
+            <div class="container">
+              <div class="hero-head">
+                <span class="eyebrow">WELCOME USER!</span>
+              </div>
+              <h1 class="headline">FB Auto React <span id="typeTarget" class="typing"></span></h1>
+              <p class="subcopy">Automatically get reactions from Facebook posts—quick, free, and private.</p>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="container">
+              <div class="tool-card">
+                <h2 style="margin-top: 0;">Get Facebook Reactions</h2>
+                <form id="reactForm">
+                  <div class="input-group">
+                    <label class="input-label" for="session">Session Token</label>
+                    <input type="text" id="session" class="input-field" placeholder="Enter your session token" required>
+                  </div>
+                  <div class="input-group">
+                    <label class="input-label" for="postLink">Post Link</label>
+                    <input type="url" id="postLink" class="input-field" placeholder="https://facebook.com/..." required>
+                  </div>
+                  <div class="input-group">
+                    <label class="input-label" for="reactionType">Reaction Type</label>
+                    <select id="reactionType" class="select-field" required>
+                      <option value="LIKE">Like 👍</option>
+                      <option value="LOVE">Love ❤️</option>
+                      <option value="CARE">Care 🤗</option>
+                      <option value="HAHA">Haha 😆</option>
+                      <option value="WOW">Wow 😮</option>
+                      <option value="SAD">Sad 😢</option>
+                      <option value="ANGRY">Angry 😠</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn" id="submitBtn">
+                    <span id="btnText">Get Reactions</span>
+                  </button>
+                </form>
+                <div id="result"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="about" class="section">
+            <div class="container">
+              <h2>About KazuX</h2>
+              <div class="chips">
+                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Fast</div>
+                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Free Service</div>
+                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Private</div>
+                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Accessible</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="faq" class="section">
+            <div class="container">
+              <h2>FAQ</h2>
+              <div style="display: grid; gap: 14px;">
+                <details class="faq">
+                  <summary><i data-lucide="help-circle" class="faq-ico"></i>What is FB Auto React?</summary>
+                  <p>FB Auto React is a tool that retrieves reaction data from Facebook posts using the official API.</p>
+                </details>
+                <details class="faq">
+                  <summary><i data-lucide="shield" class="faq-ico"></i>Is my session token safe?</summary>
+                  <p>We never store your session token. All requests are processed in real-time and data is immediately discarded.</p>
+                </details>
+                <details class="faq">
+                  <summary><i data-lucide="key" class="faq-ico"></i>How do I get my session token?</summary>
+                  <p>You can obtain your session token from your Facebook cookies. Check your browser's developer tools under Application/Storage > Cookies.</p>
+                </details>
+                <details class="faq">
+                  <summary><i data-lucide="zap" class="faq-ico"></i>What reaction types are supported?</summary>
+                  <p>We support all Facebook reactions: Like, Love, Care, Haha, Wow, Sad, and Angry.</p>
+                </details>
+                <details class="faq">
+                  <summary><i data-lucide="dollar-sign" class="faq-ico"></i>Is KazuX free?</summary>
+                  <p>Yes. KazuX is completely free to use and does not require an account or payment.</p>
+                </details>
+              </div>
+            </div>
+          </section>
+
+          <footer>
+            <div class="container footer">
+              <a class="footer-brand" href="/">
+                <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX logo">
+                <span>KazuX</span>
+              </a>
+              <p class="footer-note">KazuX offers free website services—no payment or login required.</p>
+              <div class="copyright">© 2025 KazuX. All rights reserved.</div>
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <div id="mobileDrawer" class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-panel" id="drawerPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <a class="brand" href="/">
+            <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX logo">
+            <span>KazuX</span>
+          </a>
+          <button id="closeDrawer" class="icon-btn round focus-ring" aria-label="Close menu">
+            <i data-lucide="x" class="ico"></i>
+          </button>
+        </div>
+        <div class="tools-label">Tools</div>
+        <nav class="nav" aria-label="Mobile Tools">
+          <a href="/tiktok-downloader.html">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="download" class="ico"></i>
+              <span>TikTok Downloader</span>
+            </span>
+            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+          </a>
+          <a href="/" aria-current="true">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="heart" class="ico"></i>
+              <span>FB Auto React</span>
+            </span>
+            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+            <span class="sr-only">Current</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      const htmlEl = document.documentElement;
+      const themeToggleTop = document.getElementById('themeToggleTop');
+      const typeTarget = document.getElementById('typeTarget');
+      const openDrawer = document.getElementById('openDrawer');
+      const closeDrawer = document.getElementById('closeDrawer');
+      const mobileDrawer = document.getElementById('mobileDrawer');
+      const topDot = document.getElementById('topDot');
+      const topText = document.getElementById('topText');
+      const sideNav = document.getElementById('sideNav');
+      const navIndicator = document.getElementById('navIndicator');
+      const reactForm = document.getElementById('reactForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const resultDiv = document.getElementById('result');
+
+      function getStoredTheme() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function renderThemeIcon(isDark) {
+        themeToggleTop.innerHTML = isDark ? '<i data-lucide="moon" class="ico"></i>' : '<i data-lucide="sun" class="ico"></i>';
+        if (window.lucide) lucide.createIcons();
+      }
+
+      function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const isDark = theme === 'dark';
+        renderThemeIcon(isDark);
+        themeToggleTop.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        themeToggleTop.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      }
+
+      function toggleTheme() {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      }
+
+      function lockScroll(lock) {
+        if (lock) {
+          document.body.dataset.prevOverflow = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = document.body.dataset.prevOverflow || '';
+          delete document.body.dataset.prevOverflow;
+        }
+      }
+
+      function openMenu() {
+        mobileDrawer.classList.add('open');
+        openDrawer.setAttribute('aria-expanded', 'true');
+        lockScroll(true);
+        const focusable = mobileDrawer.querySelector('button, a');
+        if (focusable) focusable.focus();
+      }
+
+      function closeMenu() {
+        mobileDrawer.classList.remove('open');
+        openDrawer.setAttribute('aria-expanded', 'false');
+        lockScroll(false);
+        openDrawer.focus();
+      }
+
+      function trapFocus(e) {
+        if (!mobileDrawer.classList.contains('open')) return;
+        if (e.key !== 'Tab') return;
+        const nodes = mobileDrawer.querySelectorAll('a, button');
+        if (!nodes.length) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus();
+          e.preventDefault();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus();
+          e.preventDefault();
+        }
+      }
+
+      function typewriter(el, words) {
+        let i = 0;
+        let j = 0;
+        let forward = true;
+        function step() {
+          const word = words[i];
+          if (forward) {
+            j += 1;
+            el.textContent = word.slice(0, j);
+            if (j === word.length) {
+              forward = false;
+              setTimeout(step, 900);
+              return;
+            }
+          } else {
+            j -= 1;
+            el.textContent = word.slice(0, j);
+            if (j === 0) {
+              forward = true;
+              i = (i + 1) % words.length;
+            }
+          }
+          setTimeout(step, forward ? 80 : 40);
+        }
+        if (el) step();
+      }
+
+      function setStatus(online) {
+        if (!topDot || !topText) return;
+        if (online) {
+          topDot.classList.remove('offline');
+          topText.textContent = 'Online';
+        } else {
+          topDot.classList.add('offline');
+          topText.textContent = 'Offline';
+        }
+      }
+
+      function placeIndicator(container, indicator) {
+        if (!container || !indicator) return;
+        const current = container.querySelector('a[aria-current="true"]');
+        const rect = container.getBoundingClientRect();
+        const linkRect = current ? current.getBoundingClientRect() : null;
+        const height = current ? current.offsetHeight : 40;
+        indicator.style.height = height + 'px';
+        indicator.style.transform = linkRect
+          ? 'translateY(' + (linkRect.top - rect.top + container.scrollTop) + 'px)'
+          : 'translateY(0px)';
+      }
+
+      function addRipple(e) {
+        const el = e.currentTarget;
+        const rect = el.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const size = Math.max(rect.width, rect.height);
+        const x = (e.clientX || rect.left + rect.width / 2) - rect.left - size / 2;
+        const y = (e.clientY || rect.top + rect.height / 2) - rect.top - size / 2;
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        el.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      }
+
+      function wireNav(container, indicator) {
+        if (!container) return;
+        const links = Array.from(container.querySelectorAll('a'));
+        links.forEach((a) => {
+          a.addEventListener('click', (e) => {
+            links.forEach((n) => n.removeAttribute('aria-current'));
+            a.setAttribute('aria-current', 'true');
+            addRipple(e);
+            requestAnimationFrame(() => placeIndicator(container, indicator));
+          });
+          a.addEventListener('pointerdown', addRipple);
+        });
+        placeIndicator(container, indicator);
+        window.addEventListener('resize', () => placeIndicator(container, indicator));
+      }
+
+      async function handleSubmit(e) {
+        e.preventDefault();
+        
+        const session = document.getElementById('session').value.trim();
+        const postLink = document.getElementById('postLink').value.trim();
+        const reactionType = document.getElementById('reactionType').value;
+        
+        submitBtn.disabled = true;
+        btnText.innerHTML = '<span class="spinner"></span> Processing...';
+        resultDiv.innerHTML = '';
+        
+        try {
+          const response = await fetch('/api/get_reactions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              session: session,
+              link: postLink,
+              reaction_type: reactionType
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (data.error) {
+            resultDiv.innerHTML = `<div class="error-msg">${data.error}</div>`;
+          } else {
+            let html = '<div class="result-box">';
+            html += '<div class="success-msg">✓ Reactions retrieved successfully!</div>';
+            html += '<div style="margin-top: 16px;">';
+            
+            if (data.status) {
+              html += `<div class="result-item"><div class="result-label">Status</div>${data.status}</div>`;
+            }
+            if (data.total_reactions !== undefined) {
+              html += `<div class="result-item"><div class="result-label">Total Reactions</div>${data.total_reactions}</div>`;
+            }
+            if (data.reaction_type) {
+              html += `<div class="result-item"><div class="result-label">Reaction Type</div>${data.reaction_type}</div>`;
+            }
+            if (data.post_id) {
+              html += `<div class="result-item"><div class="result-label">Post ID</div>${data.post_id}</div>`;
+            }
+            if (data.message) {
+              html += `<div class="result-item"><div class="result-label">Message</div>${data.message}</div>`;
+            }
+            
+            html += '</div></div>';
+            resultDiv.innerHTML = html;
+          }
+        } catch (error) {
+          resultDiv.innerHTML = `<div class="error-msg">Network error: ${error.message}</div>`;
+        } finally {
+          submitBtn.disabled = false;
+          btnText.textContent = 'Get Reactions';
+        }
+      }
+
+      function init() {
+        applyTheme(getStoredTheme());
+        typewriter(typeTarget, ['Fast & Free', 'Privacy-First', 'No Login']);
+        setStatus(navigator.onLine);
+        window.addEventListener('online', () => setStatus(true));
+        window.addEventListener('offline', () => setStatus(false));
+        if (themeToggleTop) themeToggleTop.addEventListener('click', toggleTheme);
+        if (openDrawer) openDrawer.addEventListener('click', openMenu);
+        if (closeDrawer) closeDrawer.addEventListener('click', closeMenu);
+        if (mobileDrawer) {
+          mobileDrawer.addEventListener('click', (e) => {
+            if (e.target === mobileDrawer) closeMenu();
+          });
+        }
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) closeMenu();
+          trapFocus(e);
+        });
+        wireNav(sideNav, navIndicator);
+        if (reactForm) reactForm.addEventListener('submit', handleSubmit);
+        if (window.lucide) lucide.createIcons();
+      }
+      init();
+    </script>
+  </body>
+</html>
