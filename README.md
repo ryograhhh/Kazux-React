@@ -1,2 +1,1 @@
-# Kazux-React
-Web Project React BoostFb — UPDATED V1.0
+# Kazux-React (BETA VERSION NOT FINAL) 
