@@ -1,0 +1,25 @@
+{
+  "name": "kazux-autoreact",
+  "version": "1.0.0",
+  "description": "Express proxy server for reactions API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "express",
+    "proxy",
+    "api",
+    "axios"
+  ],
+  "author": "Ryo Takashi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
