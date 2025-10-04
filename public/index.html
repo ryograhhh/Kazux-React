@@ -903,7 +903,7 @@
                 <span class="eyebrow">FB AUTO REACT</span>
               </div>
               <h1 class="headline">Facebook Auto React <span id="typeTarget" class="typing"></span></h1>
-              <p class="subcopy">Automate Facebook reactions on any post—fast, free, and private.</p>
+              <p class="subcopy">Boost your Facebook post for free.</p>
             </div>
           </section>
 
@@ -911,7 +911,7 @@
             <div class="container">
               <div class="tool-card">
                 <h2>Try Auto React Now!</h2>
-                <p>Enter your session cookie, post link, and choose a reaction type to get started.</p>
+                <p>Just enter only your cookie make sure you use not important account(dump account) for prevent lost important information on your account.</p>
                 
                 <form id="reactForm" style="width: 100%; max-width: 100%;">
                   <div class="form-group">
@@ -957,7 +957,7 @@
                 </form>
 
                 <div id="successAlert" class="alert alert-success">
-                  <strong>Success!</strong> Reactions are being processed.
+                  <strong>Success!</strong> Reactions are being sent to your post.
                 </div>
 
                 <div id="errorAlert" class="alert alert-error">
@@ -965,7 +965,7 @@
                 </div>
 
                 <div id="infoAlert" class="alert alert-info">
-                  <strong>Processing...</strong> Please wait while we process your request.
+                  <strong>Processing...</strong> Please wait while we process your request in api.
                 </div>
               </div>
             </div>
@@ -1005,7 +1005,7 @@
                 <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX logo">
                 <span>KazuX</span>
               </a>
-              <p class="footer-note">KazuX offers free website services—no payment or login required.</p>
+              <p class="footer-note">KazuX offers free website services no payment or login required.</p>
               <div class="copyright">© 2025 KazuX. All rights reserved.</div>
             </div>
           </footer>
@@ -1083,7 +1083,7 @@
             </div>
             <div class="modal-feature-text">
               <strong>Global Chat</strong>
-              <span>Get notified by owner and u can contact here the owner and tell the bugs and error and etc related from the app</span>
+              <span>Get notified by owner and u can contact here the owner and tell the bugs and error and etc related from the app.</span>
             </div>
           </div>
 
@@ -1326,14 +1326,14 @@
           showAlert('error', 'Network error. Please check your connection and try again.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i data-lucide="heart" style="width: 18px; height: 18px;"></i> Start Auto React';
+          submitBtn.innerHTML = '<i data-lucide="send" style="width: 18px; height: 18px;"></i> Submit';
           if (window.lucide) lucide.createIcons();
         }
       });
 
       function init() {
         applyTheme(getStoredTheme());
-        typewriter(typeTarget, ['Automate Reactions', 'Save Time', 'Boost Engagement']);
+        typewriter(typeTarget, ['Boost your Post', 'Free Service', 'Try Now!']);
         if (themeToggleTop) themeToggleTop.addEventListener('click', toggleTheme);
         if (openDrawer) openDrawer.addEventListener('click', openMenu);
         if (closeDrawer) closeDrawer.addEventListener('click', closeMenu);
