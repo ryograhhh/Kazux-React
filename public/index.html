@@ -6,19 +6,8 @@
     <title>KazuX — Free Online Media Tools</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-      @font-face {
-        font-family: 'CustomFont';
-        src: url('bold.ttf') format('truetype');
-        font-weight: 700;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'CustomFont';
-        src: url('reg.otf') format('opentype');
-        font-weight: 400;
-        font-style: normal;
-      }
       :root {
         --bg: #0a0a0a;
         --fg: #fafafa;
@@ -61,7 +50,7 @@
       }
       body {
         margin: 0;
-        font-family: CustomFont, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
         color: var(--fg);
         background: var(--bg);
         -webkit-font-smoothing: antialiased;
@@ -252,74 +241,6 @@
         align-items: center;
         gap: 8px;
       }
-      .top-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: var(--elev);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--fg);
-      }
-      .top-status > .dot {
-        display: inline-block;
-        flex: 0 0 10px;
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: var(--ok);
-        position: relative;
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
-        animation: dotGlow 2s ease-out infinite;
-      }
-      .top-status > .dot::after {
-        content: "";
-        position: absolute;
-        inset: -6px;
-        border-radius: 999px;
-        border: 2px solid var(--ok);
-        opacity: 0.5;
-        transform: scale(0.6);
-        animation: dotPulse 1.2s ease-out infinite;
-      }
-      .top-status > .dot.offline {
-        background: #71717a;
-        box-shadow: none;
-        animation: none;
-      }
-      .top-status > .dot.offline::after {
-        content: none;
-      }
-      @keyframes dotPulse {
-        0% {
-          opacity: 0.6;
-          transform: scale(0.6);
-        }
-        70% {
-          opacity: 0.12;
-          transform: scale(1.3);
-        }
-        100% {
-          opacity: 0;
-          transform: scale(1.6);
-        }
-      }
-      @keyframes dotGlow {
-        0% {
-          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
-        }
-        50% {
-          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.08);
-        }
-        100% {
-          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.18);
-        }
-      }
       @media (max-width: 960px) {
         .sidebar {
           display: none;
@@ -335,8 +256,12 @@
         border: 1px solid var(--border);
         background: transparent;
         color: var(--fg);
-        touch-action: manipulation;
         cursor: pointer;
+        touch-action: manipulation;
+        transition: transform 160ms ease, background-color 160ms ease;
+      }
+      .icon-btn:hover {
+        background: var(--elev);
       }
       .icon-btn.round {
         width: 36px;
@@ -347,6 +272,209 @@
       }
       .icon-btn:active {
         transform: translateY(1px) scale(0.98);
+      }
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--purple);
+        color: white;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+      }
+      .download-btn img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      }
+      .download-btn span {
+        white-space: nowrap;
+      }
+      @media (max-width: 480px) {
+        .download-btn span {
+          display: none;
+        }
+      }
+      .download-btn:hover {
+        background: var(--purple-press);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        transform: translateY(-1px);
+      }
+      .download-btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 20px;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+      .modal-content {
+        position: relative;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 32px 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+      @media (max-width: 480px) {
+        .modal-content {
+          padding: 24px 20px;
+        }
+      }
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--elev);
+        color: var(--fg);
+        cursor: pointer;
+        transition: transform 160ms ease, background-color 160ms ease;
+      }
+      .modal-close:hover {
+        background: var(--border);
+        transform: rotate(90deg);
+      }
+      .modal-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .modal-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 16px;
+        background: linear-gradient(135deg, var(--purple), var(--purple-press));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+      }
+      .modal-icon img {
+        width: 36px;
+        height: 36px;
+      }
+      .modal-header h3 {
+        font-size: 24px;
+        font-weight: 800;
+        margin: 0 0 8px;
+      }
+      .modal-header p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 14px;
+      }
+      .modal-features {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .modal-feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border-radius: var(--radius);
+        background: var(--elev);
+        border: 1px solid var(--border);
+      }
+      .modal-feature-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(139, 92, 246, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .modal-feature-text {
+        flex: 1;
+      }
+      .modal-feature-text strong {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 2px;
+      }
+      .modal-feature-text span {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .modal-actions {
+        display: grid;
+        gap: 10px;
+      }
+      .modal-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 24px;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        text-decoration: none;
+        width: 100%;
+      }
+      .modal-btn-primary {
+        background: var(--purple);
+        color: white;
+        border-color: var(--purple);
+      }
+      .modal-btn-primary:hover {
+        background: var(--purple-press);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+        transform: translateY(-1px);
+      }
+      .modal-btn-secondary {
+        background: transparent;
+        color: var(--fg);
+        border-color: var(--border);
+      }
+      .modal-btn-secondary:hover {
+        background: var(--elev);
       }
       .focus-ring:focus-visible {
         outline: 2px solid var(--ring);
@@ -453,118 +581,6 @@
         line-height: 1.6;
         margin-top: 12px;
       }
-      .tool-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
-        padding: clamp(20px, 3vw, 28px);
-        box-shadow: var(--shadow);
-      }
-      .input-group {
-        display: grid;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      .input-label {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--fg);
-        margin-bottom: 6px;
-      }
-      .input-field {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-        background: var(--elev);
-        color: var(--fg);
-        font-family: inherit;
-        font-size: 14px;
-        transition: border-color 160ms ease, box-shadow 160ms ease;
-      }
-      .input-field:focus {
-        outline: none;
-        border-color: var(--purple);
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
-      }
-      .select-field {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-        background: var(--elev);
-        color: var(--fg);
-        font-family: inherit;
-        font-size: 14px;
-        cursor: pointer;
-        transition: border-color 160ms ease, box-shadow 160ms ease;
-      }
-      .select-field:focus {
-        outline: none;
-        border-color: var(--purple);
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
-      }
-      .btn {
-        padding: 14px 24px;
-        border-radius: var(--radius);
-        border: 1px solid var(--purple);
-        background: var(--purple);
-        color: white;
-        font-family: inherit;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 160ms ease, background 160ms ease;
-        width: 100%;
-      }
-      .btn:hover {
-        background: var(--purple-press);
-        transform: translateY(-1px);
-      }
-      .btn:active {
-        transform: translateY(0) scale(0.98);
-      }
-      .btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      .result-box {
-        margin-top: 20px;
-        padding: 16px;
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-        background: var(--elev);
-      }
-      .result-item {
-        padding: 10px 0;
-        border-bottom: 1px solid var(--border);
-        color: var(--fg);
-        font-size: 14px;
-      }
-      .result-item:last-child {
-        border-bottom: none;
-      }
-      .result-label {
-        font-weight: 700;
-        color: var(--muted);
-        margin-bottom: 4px;
-      }
-      .error-msg {
-        color: var(--danger);
-        padding: 12px;
-        border-radius: var(--radius);
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        margin-top: 12px;
-      }
-      .success-msg {
-        color: var(--ok);
-        padding: 12px;
-        border-radius: var(--radius);
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        margin-top: 12px;
-      }
       .chips {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -595,6 +611,136 @@
         height: 8px;
         border-radius: 999px;
         background: var(--purple);
+      }
+      .tool-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        padding: clamp(20px, 3vw, 28px);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .tool-card h2 {
+        font-size: clamp(20px, 3vw, 26px);
+        font-weight: 800;
+        margin: 0 0 8px;
+      }
+      .tool-card p {
+        color: var(--muted);
+        margin: 0 0 24px;
+        line-height: 1.6;
+      }
+      .form-group {
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 100%;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: var(--fg);
+      }
+      .form-input,
+      .form-select {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--elev);
+        color: var(--fg);
+        font-family: inherit;
+        font-size: 15px;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+        box-sizing: border-box;
+      }
+      .form-input:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px var(--ring);
+      }
+      .form-input::placeholder {
+        color: var(--muted);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 24px;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        text-decoration: none;
+        width: 100%;
+        max-width: 100%;
+      }
+      @media (min-width: 600px) {
+        .btn {
+          width: auto;
+        }
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: var(--purple);
+        color: white;
+        border-color: var(--purple);
+      }
+      .btn-primary:hover:not(:disabled) {
+        background: var(--purple-press);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+        transform: translateY(-1px);
+      }
+      .btn-primary:active:not(:disabled) {
+        transform: translateY(0) scale(0.98);
+      }
+      .alert {
+        padding: 14px 16px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        margin-top: 16px;
+        display: none;
+      }
+      .alert.show {
+        display: block;
+      }
+      .alert-success {
+        background: rgba(34, 197, 94, 0.1);
+        border-color: var(--ok);
+        color: var(--ok);
+      }
+      .alert-error {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      .alert-info {
+        background: rgba(139, 92, 246, 0.1);
+        border-color: var(--purple);
+        color: var(--purple);
+      }
+      .spinner {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 999px;
+        animation: spin 0.6s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
       details.faq {
         border: 1px solid var(--border);
@@ -653,6 +799,34 @@
         font-size: 12px;
         color: var(--muted);
       }
+      .drawer a {
+        text-decoration: none;
+        color: var(--fg);
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 10px;
+      }
+      .drawer a[aria-current="true"]::after,
+      .drawer a:hover::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: -1px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--purple), transparent);
+        background-size: 200% 100%;
+        animation: purpleFlow 2.2s linear infinite;
+        opacity: 0.5;
+        pointer-events: none;
+      }
       .sr-only {
         position: absolute;
         width: 1px;
@@ -662,18 +836,6 @@
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
         border: 0;
-      }
-      .spinner {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-top-color: white;
-        border-radius: 50%;
-        animation: spin 0.6s linear infinite;
-      }
-      @keyframes spin {
-        to { transform: rotate(360deg); }
       }
     </style>
   </head>
@@ -687,14 +849,21 @@
         <div class="tools-label">Tools</div>
         <nav class="nav" aria-label="Tools" id="sideNav">
           <div class="nav-indicator" id="navIndicator" aria-hidden="true"></div>
+          <a href="/">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="home" class="ico"></i>
+              <span>Home</span>
+            </span>
+            <i data-lucide="arrow-right" class="ico ico-muted" aria-hidden="true"></i>
+          </a>
           <a href="/tiktok-downloader.html">
             <span style="display:flex;align-items:center;gap:10px">
               <i data-lucide="download" class="ico"></i>
               <span>TikTok Downloader</span>
             </span>
-            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+            <i data-lucide="arrow-right" class="ico ico-muted" aria-hidden="true"></i>
           </a>
-          <a href="/" aria-current="true">
+          <a href="/fbautoreact.html" aria-current="true">
             <span style="display:flex;align-items:center;gap:10px">
               <i data-lucide="heart" class="ico"></i>
               <span>FB Auto React</span>
@@ -717,10 +886,10 @@
             </a>
           </div>
           <div class="right">
-            <div class="top-status" title="Service status">
-              <span id="topDot" class="dot" aria-hidden="true"></span>
-              <span id="topText">Online</span>
-            </div>
+            <a href="#" class="download-btn" id="downloadAppBtn">
+              <img src="https://i.imgur.com/2Tgdwsf.png" alt="Download">
+              <span>Download App</span>
+            </a>
             <button id="themeToggleTop" class="icon-btn focus-ring" aria-label="Switch theme" aria-pressed="false">
               <i data-lucide="moon" class="ico"></i>
             </button>
@@ -731,55 +900,73 @@
           <section class="hero">
             <div class="container">
               <div class="hero-head">
-                <span class="eyebrow">WELCOME USER!</span>
+                <span class="eyebrow">FB AUTO REACT</span>
               </div>
-              <h1 class="headline">FB Auto React <span id="typeTarget" class="typing"></span></h1>
-              <p class="subcopy">Automatically get reactions from Facebook posts—quick, free, and private.</p>
+              <h1 class="headline">Facebook Auto React <span id="typeTarget" class="typing"></span></h1>
+              <p class="subcopy">Automate Facebook reactions on any post—fast, free, and private.</p>
             </div>
           </section>
 
           <section class="section">
             <div class="container">
               <div class="tool-card">
-                <h2 style="margin-top: 0;">Get Facebook Reactions</h2>
-                <form id="reactForm">
-                  <div class="input-group">
-                    <label class="input-label" for="session">Session Token</label>
-                    <input type="text" id="session" class="input-field" placeholder="Enter your session token" required>
+                <h2>Start Auto Reacting</h2>
+                <p>Enter your session token, post link, and choose a reaction type to get started.</p>
+                
+                <form id="reactForm" style="width: 100%; max-width: 100%;">
+                  <div class="form-group">
+                    <label for="session">Cookie</label>
+                    <input 
+                      type="text" 
+                      id="session" 
+                      class="form-input" 
+                      placeholder="Enter your Facebook cookie"
+                      required
+                    >
                   </div>
-                  <div class="input-group">
-                    <label class="input-label" for="postLink">Post Link</label>
-                    <input type="url" id="postLink" class="input-field" placeholder="https://facebook.com/..." required>
+
+                  <div class="form-group">
+                    <label for="postLink">Facebook Post Link</label>
+                    <input 
+                      type="url" 
+                      id="postLink" 
+                      class="form-input" 
+                      placeholder="https://facebook.com/..."
+                      required
+                    >
                   </div>
-                  <div class="input-group">
-                    <label class="input-label" for="reactionType">Reaction Type</label>
-                    <select id="reactionType" class="select-field" required>
-                      <option value="LIKE">Like 👍</option>
-                      <option value="LOVE">Love ❤️</option>
-                      <option value="CARE">Care 🤗</option>
-                      <option value="HAHA">Haha 😆</option>
-                      <option value="WOW">Wow 😮</option>
-                      <option value="SAD">Sad 😢</option>
-                      <option value="ANGRY">Angry 😠</option>
+
+                  <div class="form-group">
+                    <label for="reactionType">Reaction Type</label>
+                    <select id="reactionType" class="form-select" required>
+                      <option value="">Select a reaction</option>
+                      <option value="LIKE">👍 Like</option>
+                      <option value="LOVE">❤️ Love</option>
+                      <option value="CARE">🤗 Care</option>
+                      <option value="HAHA">😂 Haha</option>
+                      <option value="WOW">😮 Wow</option>
+                      <option value="SAD">😢 Sad</option>
+                      <option value="ANGRY">😡 Angry</option>
                     </select>
                   </div>
-                  <button type="submit" class="btn" id="submitBtn">
-                    <span id="btnText">Get Reactions</span>
+
+                  <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+                    Start Auto React
                   </button>
                 </form>
-                <div id="result"></div>
-              </div>
-            </div>
-          </section>
 
-          <section id="about" class="section">
-            <div class="container">
-              <h2>About KazuX</h2>
-              <div class="chips">
-                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Fast</div>
-                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Free Service</div>
-                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Private</div>
-                <div class="chip"><span class="tiny-dot" aria-hidden="true"></span>Accessible</div>
+                <div id="successAlert" class="alert alert-success">
+                  <strong>Success!</strong> Reactions are being processed.
+                </div>
+
+                <div id="errorAlert" class="alert alert-error">
+                  <strong>Error!</strong> <span id="errorMessage"></span>
+                </div>
+
+                <div id="infoAlert" class="alert alert-info">
+                  <strong>Processing...</strong> Please wait while we process your request.
+                </div>
               </div>
             </div>
           </section>
@@ -790,23 +977,23 @@
               <div style="display: grid; gap: 14px;">
                 <details class="faq">
                   <summary><i data-lucide="help-circle" class="faq-ico"></i>What is FB Auto React?</summary>
-                  <p>FB Auto React is a tool that retrieves reaction data from Facebook posts using the official API.</p>
+                  <p>FB Auto React is a tool that automates reactions on Facebook posts. You can choose from Like, Love, Care, Haha, Wow, Sad, or Angry reactions.</p>
                 </details>
                 <details class="faq">
-                  <summary><i data-lucide="shield" class="faq-ico"></i>Is my session token safe?</summary>
-                  <p>We never store your session token. All requests are processed in real-time and data is immediately discarded.</p>
+                  <summary><i data-lucide="key" class="faq-ico"></i>What is a cookie?</summary>
+                  <p>A cookie is a unique identifier that authenticates your Facebook account. Never share your cookie with anyone for security reasons.</p>
                 </details>
                 <details class="faq">
-                  <summary><i data-lucide="key" class="faq-ico"></i>How do I get my session token?</summary>
-                  <p>You can obtain your session token from your Facebook cookies. Check your browser's developer tools under Application/Storage > Cookies.</p>
+                  <summary><i data-lucide="shield" class="faq-ico"></i>Is my data safe?</summary>
+                  <p>Yes. We do not store your cookies or any personal data. All requests are processed securely and deleted immediately after.</p>
                 </details>
                 <details class="faq">
-                  <summary><i data-lucide="zap" class="faq-ico"></i>What reaction types are supported?</summary>
-                  <p>We support all Facebook reactions: Like, Love, Care, Haha, Wow, Sad, and Angry.</p>
+                  <summary><i data-lucide="zap" class="faq-ico"></i>How fast does it work?</summary>
+                  <p>The tool processes reactions instantly. Depending on the post and network speed, reactions typically appear within seconds.</p>
                 </details>
                 <details class="faq">
-                  <summary><i data-lucide="dollar-sign" class="faq-ico"></i>Is KazuX free?</summary>
-                  <p>Yes. KazuX is completely free to use and does not require an account or payment.</p>
+                  <summary><i data-lucide="alert-circle" class="faq-ico"></i>Are there any limits?</summary>
+                  <p>No limits on our end, but Facebook may have rate limits to prevent spam. Use responsibly.</p>
                 </details>
               </div>
             </div>
@@ -838,15 +1025,22 @@
           </button>
         </div>
         <div class="tools-label">Tools</div>
-        <nav class="nav" aria-label="Mobile Tools">
+        <nav class="nav" aria-label="Mobile Tools" id="drawerNav">
+          <a href="/">
+            <span style="display:flex;align-items:center;gap:10px">
+              <i data-lucide="home" class="ico"></i>
+              <span>Home</span>
+            </span>
+            <i data-lucide="arrow-right" class="ico ico-muted" aria-hidden="true"></i>
+          </a>
           <a href="/tiktok-downloader.html">
             <span style="display:flex;align-items:center;gap:10px">
               <i data-lucide="download" class="ico"></i>
               <span>TikTok Downloader</span>
             </span>
-            <i data-lucide="mouse-pointer-click" class="ico ico-muted" aria-hidden="true"></i>
+            <i data-lucide="arrow-right" class="ico ico-muted" aria-hidden="true"></i>
           </a>
-          <a href="/" aria-current="true">
+          <a href="/fbautoreact.html" aria-current="true">
             <span style="display:flex;align-items:center;gap:10px">
               <i data-lucide="heart" class="ico"></i>
               <span>FB Auto React</span>
@@ -858,6 +1052,84 @@
       </div>
     </div>
 
+    <div id="downloadModal" class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close" id="closeModal" aria-label="Close modal">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+        
+        <div class="modal-header">
+          <div class="modal-icon">
+            <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX App">
+          </div>
+          <h3>Download KazuX App</h3>
+          <p>Get the full experience with our mobile and desktop app</p>
+        </div>
+
+        <div class="modal-features">
+          <div class="modal-feature">
+            <div class="modal-feature-icon">
+              <i data-lucide="zap" style="width: 20px; height: 20px; color: var(--purple);"></i>
+            </div>
+            <div class="modal-feature-text">
+              <strong>Faster Processing</strong>
+              <span>Native app performance for lightning-fast reactions</span>
+            </div>
+          </div>
+
+          <div class="modal-feature">
+            <div class="modal-feature-icon">
+              <i data-lucide="bell" style="width: 20px; height: 20px; color: var(--purple);"></i>
+            </div>
+            <div class="modal-feature-text">
+              <strong>Push Notifications</strong>
+              <span>Get notified when your tasks complete</span>
+            </div>
+          </div>
+
+          <div class="modal-feature">
+            <div class="modal-feature-icon">
+              <i data-lucide="save" style="width: 20px; height: 20px; color: var(--purple);"></i>
+            </div>
+            <div class="modal-feature-text">
+              <strong>Save Your Sessions</strong>
+              <span>Store cookies securely for quick access</span>
+            </div>
+          </div>
+
+          <div class="modal-feature">
+            <div class="modal-feature-icon">
+              <i data-lucide="layers" style="width: 20px; height: 20px; color: var(--purple);"></i>
+            </div>
+            <div class="modal-feature-text">
+              <strong>Batch Operations</strong>
+              <span>Process multiple posts at once</span>
+            </div>
+          </div>
+
+          <div class="modal-feature">
+            <div class="modal-feature-icon">
+              <i data-lucide="shield-check" style="width: 20px; height: 20px; color: var(--purple);"></i>
+            </div>
+            <div class="modal-feature-text">
+              <strong>Enhanced Security</strong>
+              <span>Your data stays encrypted on your device</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <a href="#" class="modal-btn modal-btn-primary">
+            <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+            Download Now
+          </a>
+          <button class="modal-btn modal-btn-secondary" id="continueWebBtn">
+            Continue on Web
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       const htmlEl = document.documentElement;
@@ -866,14 +1138,19 @@
       const openDrawer = document.getElementById('openDrawer');
       const closeDrawer = document.getElementById('closeDrawer');
       const mobileDrawer = document.getElementById('mobileDrawer');
-      const topDot = document.getElementById('topDot');
-      const topText = document.getElementById('topText');
       const sideNav = document.getElementById('sideNav');
+      const drawerNav = document.getElementById('drawerNav');
       const navIndicator = document.getElementById('navIndicator');
       const reactForm = document.getElementById('reactForm');
       const submitBtn = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const resultDiv = document.getElementById('result');
+      const successAlert = document.getElementById('successAlert');
+      const errorAlert = document.getElementById('errorAlert');
+      const infoAlert = document.getElementById('infoAlert');
+      const errorMessage = document.getElementById('errorMessage');
+      const downloadAppBtn = document.getElementById('downloadAppBtn');
+      const downloadModal = document.getElementById('downloadModal');
+      const closeModal = document.getElementById('closeModal');
+      const continueWebBtn = document.getElementById('continueWebBtn');
 
       function getStoredTheme() {
         const saved = localStorage.getItem('theme');
@@ -968,17 +1245,6 @@
         if (el) step();
       }
 
-      function setStatus(online) {
-        if (!topDot || !topText) return;
-        if (online) {
-          topDot.classList.remove('offline');
-          topText.textContent = 'Online';
-        } else {
-          topDot.classList.add('offline');
-          topText.textContent = 'Offline';
-        }
-      }
-
       function placeIndicator(container, indicator) {
         if (!container || !indicator) return;
         const current = container.querySelector('a[aria-current="true"]');
@@ -1022,87 +1288,122 @@
         window.addEventListener('resize', () => placeIndicator(container, indicator));
       }
 
-      async function handleSubmit(e) {
+      function hideAllAlerts() {
+        successAlert.classList.remove('show');
+        errorAlert.classList.remove('show');
+        infoAlert.classList.remove('show');
+      }
+
+      function showAlert(type, message = '') {
+        hideAllAlerts();
+        if (type === 'success') {
+          successAlert.classList.add('show');
+        } else if (type === 'error') {
+          errorMessage.textContent = message;
+          errorAlert.classList.add('show');
+        } else if (type === 'info') {
+          infoAlert.classList.add('show');
+        }
+      }
+
+      function openDownloadModal() {
+        downloadModal.classList.add('show');
+        lockScroll(true);
+      }
+
+      function closeDownloadModal() {
+        downloadModal.classList.remove('show');
+        lockScroll(false);
+      }
+
+      reactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const session = document.getElementById('session').value.trim();
-        const postLink = document.getElementById('postLink').value.trim();
-        const reactionType = document.getElementById('reactionType').value;
-        
+        const link = document.getElementById('postLink').value.trim();
+        const reaction_type = document.getElementById('reactionType').value;
+
+        if (!session || !link || !reaction_type) {
+          showAlert('error', 'Please fill in all fields.');
+          return;
+        }
+
         submitBtn.disabled = true;
-        btnText.innerHTML = '<span class="spinner"></span> Processing...';
-        resultDiv.innerHTML = '';
-        
+        submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
+        showAlert('info');
+
         try {
           const response = await fetch('/api/get_reactions', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              session: session,
-              link: postLink,
-              reaction_type: reactionType
+              session,
+              link,
+              reaction_type
             })
           });
-          
+
           const data = await response.json();
-          
-          if (data.error) {
-            resultDiv.innerHTML = `<div class="error-msg">${data.error}</div>`;
+
+          if (response.ok) {
+            showAlert('success');
+            reactForm.reset();
           } else {
-            let html = '<div class="result-box">';
-            html += '<div class="success-msg">✓ Reactions retrieved successfully!</div>';
-            html += '<div style="margin-top: 16px;">';
-            
-            if (data.status) {
-              html += `<div class="result-item"><div class="result-label">Status</div>${data.status}</div>`;
-            }
-            if (data.total_reactions !== undefined) {
-              html += `<div class="result-item"><div class="result-label">Total Reactions</div>${data.total_reactions}</div>`;
-            }
-            if (data.reaction_type) {
-              html += `<div class="result-item"><div class="result-label">Reaction Type</div>${data.reaction_type}</div>`;
-            }
-            if (data.post_id) {
-              html += `<div class="result-item"><div class="result-label">Post ID</div>${data.post_id}</div>`;
-            }
-            if (data.message) {
-              html += `<div class="result-item"><div class="result-label">Message</div>${data.message}</div>`;
-            }
-            
-            html += '</div></div>';
-            resultDiv.innerHTML = html;
+            showAlert('error', data.error || 'Something went wrong. Please try again.');
           }
         } catch (error) {
-          resultDiv.innerHTML = `<div class="error-msg">Network error: ${error.message}</div>`;
+          showAlert('error', 'Network error. Please check your connection and try again.');
         } finally {
           submitBtn.disabled = false;
-          btnText.textContent = 'Get Reactions';
+          submitBtn.innerHTML = '<i data-lucide="heart" style="width: 18px; height: 18px;"></i> Start Auto React';
+          if (window.lucide) lucide.createIcons();
         }
-      }
+      });
 
       function init() {
         applyTheme(getStoredTheme());
-        typewriter(typeTarget, ['Fast & Free', 'Privacy-First', 'No Login']);
-        setStatus(navigator.onLine);
-        window.addEventListener('online', () => setStatus(true));
-        window.addEventListener('offline', () => setStatus(false));
+        typewriter(typeTarget, ['Automate Reactions', 'Save Time', 'Boost Engagement']);
         if (themeToggleTop) themeToggleTop.addEventListener('click', toggleTheme);
         if (openDrawer) openDrawer.addEventListener('click', openMenu);
         if (closeDrawer) closeDrawer.addEventListener('click', closeMenu);
+        if (downloadAppBtn) {
+          downloadAppBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openDownloadModal();
+          });
+        }
+        if (closeModal) closeModal.addEventListener('click', closeDownloadModal);
+        if (continueWebBtn) continueWebBtn.addEventListener('click', closeDownloadModal);
+        if (downloadModal) {
+          downloadModal.addEventListener('click', (e) => {
+            if (e.target === downloadModal) closeDownloadModal();
+          });
+        }
         if (mobileDrawer) {
           mobileDrawer.addEventListener('click', (e) => {
             if (e.target === mobileDrawer) closeMenu();
           });
         }
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) closeMenu();
+          if (e.key === 'Escape') {
+            if (downloadModal.classList.contains('show')) closeDownloadModal();
+            else if (mobileDrawer.classList.contains('open')) closeMenu();
+          }
           trapFocus(e);
         });
         wireNav(sideNav, navIndicator);
-        if (reactForm) reactForm.addEventListener('submit', handleSubmit);
+        wireNav(drawerNav, null);
         if (window.lucide) lucide.createIcons();
+        
+        setTimeout(() => {
+          const hasSeenModal = sessionStorage.getItem('hasSeenDownloadModal');
+          if (!hasSeenModal) {
+            openDownloadModal();
+            sessionStorage.setItem('hasSeenDownloadModal', 'true');
+          }
+        }, 3000);
       }
       init();
     </script>
