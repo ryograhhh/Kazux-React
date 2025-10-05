@@ -19,7 +19,6 @@
         --accent-hover: #e5e5e5;
         --radius: 16px;
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        --sidebar-w: 280px;
       }
       [data-theme="light"] {
         --bg: #ffffff;
@@ -35,8 +34,7 @@
       * {
         box-sizing: border-box;
       }
-      html,
-      body {
+      html, body {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -46,76 +44,6 @@
         color: var(--fg);
         background: var(--bg);
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      .app {
-        display: grid;
-        grid-template-columns: var(--sidebar-w) 1fr;
-        min-height: 100vh;
-      }
-      @media (max-width: 960px) {
-        .app {
-          grid-template-columns: 1fr;
-        }
-      }
-      .sidebar {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        background: var(--bg);
-        border-right: 1px solid var(--border);
-      }
-      @media (max-width: 960px) {
-        .sidebar {
-          display: none;
-        }
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: var(--fg);
-        font-weight: 700;
-        font-size: 16px;
-      }
-      .brand img {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-      }
-      .nav {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      .nav a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: var(--radius);
-        text-decoration: none;
-        color: var(--muted);
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 160ms;
-      }
-      .nav a:hover {
-        background: var(--card);
-        color: var(--fg);
-      }
-      .nav a[aria-current="true"] {
-        background: var(--card);
-        color: var(--fg);
-      }
-      .ico {
-        width: 18px;
-        height: 18px;
       }
       .topbar {
         position: sticky;
@@ -134,6 +62,20 @@
         align-items: center;
         gap: 12px;
       }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--fg);
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .brand img {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+      }
       .icon-btn {
         width: 40px;
         height: 40px;
@@ -142,13 +84,18 @@
         justify-content: center;
         border-radius: 999px;
         border: 1px solid var(--border);
-        background: transparent;
+        background: var(--bg);
         color: var(--fg);
         cursor: pointer;
         transition: all 160ms;
       }
       .icon-btn:hover {
         background: var(--card);
+      }
+      .icon-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
       }
       .download-btn {
         display: inline-flex;
@@ -169,35 +116,14 @@
         background: var(--accent-hover);
       }
       .download-btn img {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         border-radius: 999px;
       }
       @media (max-width: 480px) {
         .download-btn span {
           display: none;
         }
-      }
-      .drawer {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        display: none;
-      }
-      .drawer.open {
-        display: flex;
-      }
-      .drawer-panel {
-        width: 280px;
-        height: 100%;
-        background: var(--bg);
-        border-right: 1px solid var(--border);
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        overflow-y: auto;
       }
       .container {
         max-width: 600px;
@@ -242,7 +168,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 32px;
         overflow: hidden;
       }
       .user-avatar img {
@@ -340,7 +265,11 @@
         background: var(--card);
         cursor: pointer;
         transition: all 160ms;
-        font-size: 28px;
+        padding: 0;
+      }
+      .reaction-btn svg {
+        width: 32px;
+        height: 32px;
       }
       .reaction-btn:hover {
         transform: scale(1.1);
@@ -386,9 +315,7 @@
         animation: spin 0.6s linear infinite;
       }
       @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
+        to { transform: rotate(360deg); }
       }
       .modal {
         position: fixed;
@@ -415,14 +342,8 @@
         animation: modalIn 0.2s ease-out;
       }
       @keyframes modalIn {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
       }
       .modal-header {
         text-align: center;
@@ -569,7 +490,7 @@
       .footer-brand img {
         width: 28px;
         height: 28px;
-        border-radius: 6px;
+        border-radius: 999px;
       }
       .footer-note {
         color: var(--muted);
@@ -580,266 +501,185 @@
         font-size: 12px;
         color: var(--muted);
       }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-      }
     </style>
   </head>
   <body>
-    <div class="app">
-      <aside class="sidebar">
+    <div class="topbar">
+      <div class="left">
         <a class="brand" href="/">
           <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX">
           <span>KazuX</span>
         </a>
-        <nav class="nav">
-          <a href="/">
-            <i data-lucide="home" class="ico"></i>
-            <span>Home</span>
-          </a>
-          <a href="/tiktok-downloader.html">
-            <i data-lucide="download" class="ico"></i>
-            <span>TikTok Downloader</span>
-          </a>
-          <a href="/fbautoreact.html" aria-current="true">
-            <i data-lucide="heart" class="ico"></i>
-            <span>FB Auto React</span>
-          </a>
-        </nav>
-      </aside>
+      </div>
+      <div class="right">
+        <a href="#" class="download-btn" id="downloadAppBtn">
+          <img src="https://www.lara.rest/images/fav.png" alt="">
+          <span>Download App</span>
+        </a>
+        <button id="settingsBtn" class="icon-btn" aria-label="Settings" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m5.2-13.2 4.2 4.2m-6 6 4.2 4.2M1 12h6m6 0h6m-13.2-5.2 4.2 4.2m-6 6 4.2 4.2"/></svg>
+        </button>
+        <button id="themeToggle" class="icon-btn" aria-label="Theme">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
 
-      <div>
-        <div class="topbar">
-          <div class="left">
-            <button id="openDrawer" class="icon-btn" aria-label="Menu">
-              <i data-lucide="menu" class="ico"></i>
-            </button>
-            <a class="brand" href="/">
-              <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX">
-              <span>KazuX</span>
-            </a>
-          </div>
-          <div class="right">
-            <a href="Lara_1.5.1.apk" class="download-btn" id="downloadAppBtn">
-              <img src="https://www.lara.rest/images/fav.png" alt="">
-              <span>Download App For</span>
-            </a>
-            <button id="settingsBtn" class="icon-btn" aria-label="Settings" style="display: none;">
-              <i data-lucide="settings" class="ico"></i>
-            </button>
-            <button id="themeToggle" class="icon-btn" aria-label="Theme">
-              <i data-lucide="moon" class="ico"></i>
-            </button>
-          </div>
-        </div>
-
-        <main>
-          <div id="mainPage">
-            <section>
-              <div class="container">
-                <div id="loginCard" class="card">
-                  <h2>Enter Your Cookie</h2>
-                  <p>Please enter your Facebook cookie to continue. Use a test account to prevent loss of important information.</p>
-                  <form id="loginForm">
-                    <div class="form-group">
-                      <label for="cookieInput">Facebook Cookie</label>
-                      <input 
-                        type="text" 
-                        id="cookieInput" 
-                        class="form-input" 
-                        placeholder="Enter your Facebook cookie"
-                        required
-                      >
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="loginBtn">
-                      Continue
-                    </button>
-                  </form>
+    <main>
+      <div id="mainPage">
+        <section>
+          <div class="container">
+            <div id="loginCard" class="card">
+              <h2>Enter Your Cookie</h2>
+              <p>Please enter your Facebook cookie to continue. Use a test account to prevent loss of important information.</p>
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="cookieInput">Facebook Cookie</label>
+                  <input type="text" id="cookieInput" class="form-input" placeholder="Enter your Facebook cookie" required>
                 </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Continue</button>
+              </form>
+            </div>
 
-                <div id="userPanel" style="display: none;">
-                  <div class="user-card">
-                    <div class="user-avatar" id="userAvatar"></div>
-                    <p class="user-name" id="userName">Loading...</p>
-                    <p class="user-status" id="userStatus">Ready to use</p>
-                  </div>
-
-                  <div class="card">
-                    <h2>Post Link</h2>
-                    <p>Make sure the post privacy and public profile info are set to Public</p>
-                    
-                    <form id="reactForm">
-                      <div class="form-group">
-                        <input 
-                          type="url" 
-                          id="postLink" 
-                          class="form-input" 
-                          placeholder="Enter post link"
-                          required
-                        >
-                      </div>
-
-                      <div class="form-group">
-                        <label>Reaction</label>
-                        <div class="reaction-grid" id="reactionGrid">
-                          <button type="button" class="reaction-btn" data-reaction="LIKE">👍</button>
-                          <button type="button" class="reaction-btn" data-reaction="LOVE">❤️</button>
-                          <button type="button" class="reaction-btn" data-reaction="CARE">🤗</button>
-                          <button type="button" class="reaction-btn" data-reaction="HAHA">😂</button>
-                          <button type="button" class="reaction-btn" data-reaction="WOW">😮</button>
-                          <button type="button" class="reaction-btn" data-reaction="SAD">😢</button>
-                          <button type="button" class="reaction-btn" data-reaction="ANGRY">😡</button>
-                        </div>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary" id="submitBtn">
-                        <i data-lucide="clock" class="ico"></i>
-                        Limit
-                      </button>
-                    </form>
-
-                    <div id="successAlert" class="alert alert-success"></div>
-                    <div id="errorAlert" class="alert alert-error"></div>
-                    <div id="infoAlert" class="alert alert-info"></div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <footer>
-              <div class="container footer">
-                <a class="footer-brand" href="/">
-                  <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX">
-                  <span>KazuX</span>
-                </a>
-                <p class="footer-note">KazuX offers free website services—no payment or login required.</p>
-                <div class="copyright">© 2025 KazuX. All rights reserved.</div>
-              </div>
-            </footer>
-          </div>
-
-          <div id="settingsPage" class="settings-page">
-            <div class="container">
-              <div class="settings-header">
-                <button id="backBtn" class="icon-btn">
-                  <i data-lucide="arrow-left" class="ico"></i>
-                </button>
-                <h2>Settings</h2>
+            <div id="userPanel" style="display: none;">
+              <div class="user-card">
+                <div class="user-avatar" id="userAvatar"></div>
+                <p class="user-name" id="userName">Loading...</p>
+                <p class="user-status" id="userStatus">Ready to use</p>
               </div>
 
-              <div class="settings-section">
-                <h3>Profile</h3>
-                <div class="settings-list">
-                  <div class="settings-item">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Profile guard</p>
-                      <p class="settings-item-desc">Protect your profile picture</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
+              <div class="card">
+                <h2>Post Link</h2>
+                <p>Make sure the post privacy and public profile info are set to Public</p>
+                
+                <form id="reactForm">
+                  <div class="form-group">
+                    <input type="url" id="postLink" class="form-input" placeholder="Enter post link" required>
                   </div>
-                </div>
-              </div>
 
-              <div class="settings-section">
-                <h3>Security</h3>
-                <div class="settings-list">
-                  <div class="settings-item">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Key</p>
-                      <p class="settings-item-desc">Copy in-app key</p>
+                  <div class="form-group">
+                    <label>Reaction</label>
+                    <div class="reaction-grid" id="reactionGrid">
+                      <button type="button" class="reaction-btn" data-reaction="LIKE"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M16.0001 7.9996c0 4.418-3.5815 7.9996-7.9995 7.9996S.001 12.4176.001 7.9996 3.5825 0 8.0006 0C12.4186 0 16 3.5815 16 7.9996Z' fill='url(#paint0_linear_15251_63610)'/><path d='M16.0001 7.9996c0 4.418-3.5815 7.9996-7.9995 7.9996S.001 12.4176.001 7.9996 3.5825 0 8.0006 0C12.4186 0 16 3.5815 16 7.9996Z' fill='url(#paint1_radial_15251_63610)'/><path d='M16.0001 7.9996c0 4.418-3.5815 7.9996-7.9995 7.9996S.001 12.4176.001 7.9996 3.5825 0 8.0006 0C12.4186 0 16 3.5815 16 7.9996Z' fill='url(#paint2_radial_15251_63610)' fill-opacity='.5'/><path d='M7.3014 3.8662a.6974.6974 0 0 1 .6974-.6977c.6742 0 1.2207.5465 1.2207 1.2206v1.7464a.101.101 0 0 0 .101.101h1.7953c.992 0 1.7232.9273 1.4917 1.892l-.4572 1.9047a2.301 2.301 0 0 1-2.2374 1.764H6.9185a.5752.5752 0 0 1-.5752-.5752V7.7384c0-.4168.097-.8278.2834-1.2005l.2856-.5712a3.6878 3.6878 0 0 0 .3893-1.6509l-.0002-.4496ZM4.367 7a.767.767 0 0 0-.7669.767v3.2598a.767.767 0 0 0 .767.767h.767a.3835.3835 0 0 0 .3835-.3835V7.3835A.3835.3835 0 0 0 5.134 7h-.767Z' fill='#fff'/><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(90 .0005 8) scale(7.99958)'><stop offset='.5618' stop-color='#0866FF' stop-opacity='0'/><stop offset='1' stop-color='#0866FF' stop-opacity='.1'/></radialGradient><radialGradient id='paint2_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(45 -4.5257 10.9237) scale(10.1818)'><stop offset='.3143' stop-color='#02ADFC'/><stop offset='1' stop-color='#02ADFC' stop-opacity='0'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.3989' y1='2.3999' x2='13.5983' y2='13.5993' gradientUnits='userSpaceOnUse'><stop stop-color='#02ADFC'/><stop offset='.5' stop-color='#0866FF'/><stop offset='1' stop-color='#2B7EFF'/></linearGradient></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="LOVE"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g clip-path='url(#clip0_15251_63610)'><path d='M15.9963 8c0 4.4179-3.5811 7.9993-7.9986 7.9993-4.4176 0-7.9987-3.5814-7.9987-7.9992 0-4.4179 3.5811-7.9992 7.9987-7.9992 4.4175 0 7.9986 3.5813 7.9986 7.9992Z' fill='url(#paint0_linear_15251_63610)'/><path d='M15.9973 7.9992c0 4.4178-3.5811 7.9992-7.9987 7.9992C3.5811 15.9984 0 12.417 0 7.9992S3.5811 0 7.9986 0c4.4176 0 7.9987 3.5814 7.9987 7.9992Z' fill='url(#paint1_radial_15251_63610)'/><path d='M7.9996 5.9081c-.3528-.8845-1.1936-1.507-2.1748-1.507-1.4323 0-2.4254 1.328-2.4254 2.6797 0 2.2718 2.3938 4.0094 4.0816 5.1589.3168.2157.7205.2157 1.0373 0 1.6878-1.1495 4.0815-2.8871 4.0815-5.159 0-1.3517-.993-2.6796-2.4254-2.6796-.9811 0-1.822.6225-2.1748 1.507Z' fill='#fff'/></g><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(0 7.9992 -7.99863 0 7.9986 7.9992)'><stop offset='.5637' stop-color='#E11731' stop-opacity='0'/><stop offset='1' stop-color='#E11731' stop-opacity='.1'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.3986' y1='2.4007' x2='13.5975' y2='13.5993' gradientUnits='userSpaceOnUse'><stop stop-color='#FF74AE'/><stop offset='.5001' stop-color='#FA2E3E'/><stop offset='1' stop-color='#FF5758'/></linearGradient><clipPath id='clip0_15251_63610'><path fill='#fff' d='M-.001.0009h15.9992v15.9984H-.001z'/></clipPath></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="CARE"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M15.9982 7.9998c0 4.4181-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5815-7.9996-7.9996 0-4.418 3.5816-7.9996 7.9996-7.9996 4.4181 0 7.9996 3.5816 7.9996 7.9996Z' fill='url(#paint0_linear_15251_63610)'/><path fill-rule='evenodd' clip-rule='evenodd' d='M9.585 7.7886a.499.499 0 0 1 .026.0043 2.849 2.849 0 0 1 1.8175 1.202 2.8423 2.8423 0 0 1 .4349 2.1333c-.2461 1.2665-1.3291 2.3137-2.4304 3.0886-1.1259.7923-2.3926 1.3839-3.2016 1.7072a1.08 1.08 0 0 1-1.151-.2237c-.6289-.6028-1.5818-1.6259-2.329-2.7823-.7307-1.131-1.3425-2.5076-1.0963-3.7741a2.8425 2.8425 0 0 1 1.2024-1.8151 2.8492 2.8492 0 0 1 2.1354-.4336.5086.5086 0 0 1 .0268.006 2.9735 2.9735 0 0 1 1.4594.8686c.1647.1788.3813.4853.5716.8626.3155-.2781.6296-.482.8526-.5874a2.9734 2.9734 0 0 1 1.6817-.2564Z' fill='url(#paint7_radial_15251_63610)'/><path d='M7.9977 6.8c.71 0 1.1723-.1164 1.4952-.2331.3063-.1108.4-.4145.08-.4762C9.277 6.0336 8.7886 6 7.9978 6c-.7753 0-1.2813.0342-1.5903.0988-.3085.0646-.2235.3583.073.4654.3257.1177.8017.2357 1.5173.2357Z' fill='#4B280E'/><path fill-rule='evenodd' clip-rule='evenodd' d='M9.998 4.3577c-.001.7238.483.936 1.1999 1.023.7099.1024 1.1878-.1978 1.1998-1.023.01-.6941-.3809-1.5413-1.1998-1.5575-.8189.0162-1.1999.8634-1.1999 1.5575ZM5.998 4.3577c.001.7238-.483.936-1.1998 1.023-.71.1024-1.1879-.1978-1.1999-1.023-.01-.6941.381-1.5413 1.1999-1.5575.8189.0162 1.1998.8634 1.1998 1.5575Z' fill='#1C1C1D'/><defs><linearGradient id='paint0_linear_15251_63610' x1='2.5019' y1='2.5002' x2='16.002' y2='16.0002' gradientUnits='userSpaceOnUse'><stop offset='.2619' stop-color='#FFF287'/><stop offset='1' stop-color='#F68628'/></linearGradient><radialGradient id='paint7_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(4.40005 5.20005 -6.1455 5.20005 4.198 9.4003)'><stop offset='.3729' stop-color='#FA2E3E'/><stop offset='.9266' stop-color='#E11731'/></radialGradient></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="HAHA"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g clip-path='url(#clip0_15251_63610)'><path d='M15.9953 7.9996c0 4.418-3.5816 7.9996-7.9996 7.9996S-.004 12.4176-.004 7.9996 3.5776 0 7.9957 0c4.418 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint0_linear_15251_63610)'/><path d='M15.9973 7.9992c0 4.4178-3.5811 7.9992-7.9987 7.9992C3.5811 15.9984 0 12.417 0 7.9992S3.5811 0 7.9986 0c4.4176 0 7.9987 3.5814 7.9987 7.9992Z' fill='url(#paint1_radial_15251_63610)'/><path d='M15.9953 7.9996c0 4.418-3.5816 7.9996-7.9996 7.9996S-.004 12.4176-.004 7.9996 3.5776 0 7.9957 0c4.418 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint2_radial_15251_63610)' fill-opacity='.8'/><path d='M12.5278 8.1957c.4057.1104.6772.4854.623.9024-.3379 2.6001-2.5167 4.9012-5.1542 4.9012s-4.8163-2.3011-5.1542-4.9012c-.0542-.417.2173-.792.623-.9024.8708-.237 2.5215-.596 4.5312-.596 2.0098 0 3.6605.359 4.5312.596Z' fill='#4B280E'/><path d='M11.5809 12.3764c-.9328.9843-2.1948 1.6228-3.5841 1.6228-1.3892 0-2.6512-.6383-3.5839-1.6225a1.5425 1.5425 0 0 0-.016-.0174c.4475-1.0137 2.2-1.3599 3.5999-1.3599 1.4 0 3.1514.3468 3.5998 1.3599l-.0157.0171Z' fill='url(#paint3_linear_15251_63610)'/><path fill-rule='evenodd' clip-rule='evenodd' d='M13.3049 5.8793c.1614-1.1485-.6387-2.2103-1.7872-2.3717l-.0979-.0138c-1.1484-.1614-2.2103.6388-2.3717 1.7872l-.0163.1164a.5.5 0 0 0 .9902.1392l.0163-.1164c.0846-.6016.6408-1.0207 1.2424-.9362l.0978.0138c.6016.0845 1.0207.6407.9362 1.2423l-.0164.1164a.5.5 0 0 0 .9903.1392l.0163-.1164ZM2.6902 5.8793c-.1614-1.1485.6387-2.2103 1.7872-2.3717l.0979-.0138c1.1484-.1614 2.2103.6388 2.3717 1.7872l.0164.1164a.5.5 0 1 1-.9903.1392l-.0163-.1164c-.0846-.6016-.6408-1.0207-1.2423-.9362l-.098.0138c-.6015.0845-1.0206.6407-.936 1.2423l.0163.1164a.5.5 0 0 1-.9902.1392l-.0164-.1164Z' fill='#1C1C1D'/></g><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(0 7.9992 -7.99863 0 7.9986 7.9992)'><stop offset='.5637' stop-color='#FF5758' stop-opacity='0'/><stop offset='1' stop-color='#FF5758' stop-opacity='.1'/></radialGradient><radialGradient id='paint2_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(45 -4.5272 10.9202) scale(10.1818)'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#FFF287' stop-opacity='0'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.396' y1='2.3999' x2='13.5954' y2='13.5993' gradientUnits='userSpaceOnUse'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#F68628'/></linearGradient><linearGradient id='paint3_linear_15251_63610' x1='5.1979' y1='10.7996' x2='5.245' y2='14.2452' gradientUnits='userSpaceOnUse'><stop stop-color='#FF60A4'/><stop offset='.2417' stop-color='#FA2E3E'/><stop offset='1' stop-color='#BC0A26'/></linearGradient><clipPath id='clip0_15251_63610'><path fill='#fff' d='M-.002 0h16v15.9992h-16z'/></clipPath></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="WOW"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g clip-path='url(#clip0_15251_63610)'><path d='M15.9972 7.9996c0 4.418-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5816-7.9996-7.9996S3.5796 0 7.9976 0c4.4181 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint0_linear_15251_63610)'/><path d='M15.9973 7.9992c0 4.4178-3.5811 7.9992-7.9987 7.9992C3.5811 15.9984 0 12.417 0 7.9992S3.5811 0 7.9986 0c4.4176 0 7.9987 3.5814 7.9987 7.9992Z' fill='url(#paint1_radial_15251_63610)'/><path d='M15.9972 7.9996c0 4.418-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5816-7.9996-7.9996S3.5796 0 7.9976 0c4.4181 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint2_radial_15251_63610)' fill-opacity='.8'/><path fill-rule='evenodd' clip-rule='evenodd' d='M5.6144 10.8866c.159-1.8461 1.127-2.887 2.382-2.887 1.2551 0 2.2231 1.0418 2.3822 2.887.1591 1.8461-.7342 3.1127-2.3821 3.1127-1.648 0-2.5412-1.2666-2.3821-3.1127Z' fill='#4B280E'/><ellipse cx='11.1978' cy='5.6997' rx='1.3999' ry='1.6999' fill='#1C1C1D'/><ellipse cx='4.7979' cy='5.6997' rx='1.3999' ry='1.6999' fill='#1C1C1D'/><path fill-rule='evenodd' clip-rule='evenodd' d='M12.3528 3.166a1.4744 1.4744 0 0 0-1.8591-.3279.4.4 0 1 1-.3976-.6941c.9527-.5457 2.1592-.333 2.8678.5056a.4.4 0 0 1-.6111.5163ZM5.4998 2.8381a1.4744 1.4744 0 0 0-1.859.3278.4.4 0 0 1-.6111-.5162c.7085-.8387 1.915-1.0514 2.8677-.5057a.4.4 0 0 1-.3976.6941Z' fill='#E0761A'/></g><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(0 7.9992 -7.99863 0 7.9986 7.9992)'><stop offset='.5637' stop-color='#FF5758' stop-opacity='0'/><stop offset='1' stop-color='#FF5758' stop-opacity='.1'/></radialGradient><radialGradient id='paint2_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(45 -4.5262 10.9226) scale(10.1818)'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#FFF287' stop-opacity='0'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.3979' y1='2.3999' x2='13.5973' y2='13.5993' gradientUnits='userSpaceOnUse'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#F68628'/></linearGradient><clipPath id='clip0_15251_63610'><path fill='#fff' d='M-.002 0h15.9992v15.9992H-.002z'/></clipPath></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="SAD"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g clip-path='url(#clip0_15251_63610)'><path d='M15.9943 8.0004c0 4.4181-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5815-7.9996-7.9996 0-4.418 3.5816-7.9995 7.9996-7.9995 4.4181 0 7.9996 3.5815 7.9996 7.9995Z' fill='url(#paint0_linear_15251_63610)'/><path d='M15.9973 7.9992c0 4.4178-3.5811 7.9992-7.9987 7.9992C3.5811 15.9984 0 12.417 0 7.9992S3.5811 0 7.9986 0c4.4176 0 7.9987 3.5814 7.9987 7.9992Z' fill='url(#paint1_radial_15251_63610)'/><path d='M15.9943 8.0004c0 4.4181-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5815-7.9996-7.9996 0-4.418 3.5816-7.9995 7.9996-7.9995 4.4181 0 7.9996 3.5815 7.9996 7.9995Z' fill='url(#paint2_radial_15251_63610)' fill-opacity='.8'/><path d='M12.3964 9.0861c0 1.1142-.3999 1.1142-1.1999 1.1142-.7999 0-1.2 0-1.2-1.1142 0-.8205.5373-1.4856 1.2-1.4856s1.1999.6651 1.1999 1.4856ZM5.9965 9.0861c0 1.1142-.4 1.1142-1.1999 1.1142-.8 0-1.2 0-1.2-1.1142 0-.8205.5373-1.4856 1.2-1.4856s1.2.6651 1.2 1.4856Z' fill='#1C1C1D'/><path fill-rule='evenodd' clip-rule='evenodd' d='M7.9946 11.2002c1.6447 0 2.3999 1.0936 2.3999 1.4122 0 .1095-.084.1877-.2248.1877-.3152 0-.752-.4-2.1751-.4s-1.8599.4-2.175.4c-.1409 0-.2249-.0782-.2249-.1877 0-.3186.7552-1.4122 2.3999-1.4122Z' fill='#4B280E'/><path fill-rule='evenodd' clip-rule='evenodd' d='M10.7861 6.3078a3.3942 3.3942 0 0 1 1.8777 1.0409.4.4 0 0 0 .5892-.5411 4.1944 4.1944 0 0 0-2.3202-1.2862.4.4 0 1 0-.1467.7864ZM5.206 6.3078a3.3946 3.3946 0 0 0-1.8777 1.0409.4.4 0 1 1-.5891-.5411 4.1946 4.1946 0 0 1 2.3202-1.2862.4.4 0 0 1 .1467.7864Z' fill='#E0761A'/><g filter='url(#filter0_i_15251_63610)'><path d='M2.9952 11.2004c-.2647-.003-.435.1598-1.1536 1.3088-.3267.5231-.6468 1.0515-.6468 1.691 0 .994.8 1.7999 1.8 1.7999.9999 0 1.8008-.8 1.8008-1.7999 0-.6395-.32-1.1679-.6468-1.691-.7186-1.149-.8887-1.3118-1.1536-1.3088Z' fill='#02ADFC' fill-opacity='.9'/></g></g><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(0 7.9992 -7.99863 0 7.9986 7.9992)'><stop offset='.5637' stop-color='#FF5758' stop-opacity='0'/><stop offset='1' stop-color='#FF5758' stop-opacity='.1'/></radialGradient><radialGradient id='paint2_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(45 -4.5287 10.9195) scale(10.1818)'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#FFF287' stop-opacity='0'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.395' y1='2.4007' x2='13.5944' y2='13.6001' gradientUnits='userSpaceOnUse'><stop stop-color='#FFF287'/><stop offset='1' stop-color='#F68628'/></linearGradient><clipPath id='clip0_15251_63610'><path fill='#fff' d='M-.003.0009h15.9993v15.9984H-.003z'/></clipPath><filter id='filter0_i_15251_63610' x='1.1948' y='11.2003' width='3.6006' height='4.7998' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'><feFlood flood-opacity='0' result='BackgroundImageFix'/><feBlend in='SourceGraphic' in2='BackgroundImageFix' result='shape'/><feColorMatrix in='SourceAlpha' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/><feOffset/><feGaussianBlur stdDeviation='1.1999'/><feComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1'/><feColorMatrix values='0 0 0 0 0.278431 0 0 0 0 0.196078 0 0 0 0 0.952941 0 0 0 0.1 0'/><feBlend in2='shape' result='effect1_innerShadow_15251_63610'/></filter></defs></svg></button>
+                      <button type="button" class="reaction-btn" data-reaction="ANGRY"><svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g clip-path='url(#clip0_15251_63610)'><path d='M15.9972 7.9996c0 4.418-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5816-7.9996-7.9996S3.5796 0 7.9976 0c4.4181 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint0_linear_15251_63610)'/><path d='M15.9973 7.9992c0 4.4178-3.5811 7.9992-7.9987 7.9992C3.5811 15.9984 0 12.417 0 7.9992S3.5811 0 7.9986 0c4.4176 0 7.9987 3.5814 7.9987 7.9992Z' fill='url(#paint1_radial_15251_63610)'/><path d='M15.9972 7.9996c0 4.418-3.5815 7.9996-7.9996 7.9996-4.418 0-7.9996-3.5816-7.9996-7.9996S3.5796 0 7.9976 0c4.4181 0 7.9996 3.5815 7.9996 7.9996Z' fill='url(#paint2_radial_15251_63610)' fill-opacity='.8'/><path d='M12.3955 9.0853c0 1.1142-.4 1.1142-1.2 1.1142-.7999 0-1.1999 0-1.1999-1.1143 0-.8205.5372-1.4856 1.1999-1.4856s1.2.6651 1.2 1.4857ZM5.9956 9.0853c0 1.1142-.4 1.1142-1.2 1.1142-.8 0-1.1999 0-1.1999-1.1143 0-.8205.5372-1.4856 1.2-1.4856.6626 0 1.1999.6651 1.1999 1.4857Z' fill='#1C1C1D'/><path fill-rule='evenodd' clip-rule='evenodd' d='M7.9936 11.5994c1.3257 0 2.3999.292 2.3999.8023 0 .4234-1.0742.3973-2.3999.3973-1.3256 0-2.3998.0261-2.3998-.3973 0-.5103 1.0742-.8023 2.3998-.8023Z' fill='#4B280E'/><path fill-rule='evenodd' clip-rule='evenodd' d='M13.3283 7.0331a.4.4 0 0 0-.5444-.1535c-.4415.2472-1.0866.4228-1.7434.5373-.6488.1132-1.2697.1604-1.6367.1691a.4.4 0 1 0 .0191.7997c.4037-.0096 1.0643-.0602 1.755-.1807.6828-.119 1.4354-.313 1.9969-.6275a.4.4 0 0 0 .1535-.5444ZM2.491 7.0331a.4.4 0 0 1 .5444-.1535c.4416.2472 1.0866.4228 1.7434.5373.6488.1132 1.2697.1604 1.6367.1691a.4.4 0 1 1-.019.7997c-.4038-.0096-1.0643-.0602-1.7551-.1807-.6827-.119-1.4353-.313-1.9968-.6275a.4.4 0 0 1-.1536-.5444Z' fill='#BC0A26'/></g><defs><radialGradient id='paint1_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='matrix(0 7.9992 -7.99863 0 7.9986 7.9992)'><stop offset='.8134' stop-color='#FA2E3E' stop-opacity='0'/><stop offset='1' stop-color='#FA2E3E' stop-opacity='.1'/></radialGradient><radialGradient id='paint2_radial_15251_63610' cx='0' cy='0' r='1' gradientUnits='userSpaceOnUse' gradientTransform='rotate(45 -4.5272 10.9202) scale(10.1818)'><stop stop-color='#FFB169'/><stop offset='1' stop-color='#FFB169' stop-opacity='0'/></radialGradient><linearGradient id='paint0_linear_15251_63610' x1='2.396' y1='2.3999' x2='13.5954' y2='13.5993' gradientUnits='userSpaceOnUse'><stop stop-color='#FFB169'/><stop offset='1' stop-color='#FF5758'/></linearGradient><clipPath id='clip0_15251_63610'><path fill='#fff' d='M-.004 0h15.9993v15.9992H-.004z'/></clipPath></defs></svg></button>
                     </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
                   </div>
-                  <div class="settings-item">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Rotate key</p>
-                      <p class="settings-item-desc">Rotate in-app key</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
-                  </div>
-                  <div class="settings-item">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Access token</p>
-                      <p class="settings-item-desc">Copy account access token</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
-                  </div>
-                </div>
-              </div>
 
-              <div class="settings-section">
-                <h3>More</h3>
-                <div class="settings-list">
-                  <div class="settings-item">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Facebook</p>
-                      <p class="settings-item-desc">Follow our Facebook Page</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
-                  </div>
-                </div>
-              </div>
+                  <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Limit
+                  </button>
+                </form>
 
-              <div class="settings-section">
-                <h3>Other</h3>
-                <div class="settings-list">
-                  <div class="settings-item" id="switchAccountBtn">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Switch account</p>
-                      <p class="settings-item-desc">Switch between your Facebook accounts</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
-                  </div>
-                  <div class="settings-item" id="logoutBtn">
-                    <div class="settings-item-content">
-                      <p class="settings-item-title">Log out</p>
-                      <p class="settings-item-desc">Log out current account</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="ico"></i>
-                  </div>
-                </div>
+                <div id="successAlert" class="alert alert-success"></div>
+                <div id="errorAlert" class="alert alert-error"></div>
+                <div id="infoAlert" class="alert alert-info"></div>
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </section>
 
-    <!-- Mobile Drawer -->
-    <div id="drawer" class="drawer">
-      <div class="drawer-panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-          <a class="brand" href="/">
-            <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX">
-            <span>KazuX</span>
-          </a>
-          <button id="closeDrawer" class="icon-btn">
-            <i data-lucide="x" class="ico"></i>
-          </button>
-        </div>
-        <nav class="nav">
-          <a href="/">
-            <i data-lucide="home" class="ico"></i>
-            <span>Home</span>
-          </a>
-          <a href="/tiktok-downloader.html">
-            <i data-lucide="download" class="ico"></i>
-            <span>TikTok Downloader</span>
-          </a>
-          <a href="/fbautoreact.html" aria-current="true">
-            <i data-lucide="heart" class="ico"></i>
-            <span>FB Auto React</span>
-          </a>
-        </nav>
+        <footer>
+          <div class="container footer">
+            <a class="footer-brand" href="/">
+              <img src="https://i.imgur.com/2Tgdwsf.png" alt="KazuX">
+              <span>KazuX</span>
+            </a>
+            <p class="footer-note">KazuX offers free website services—no payment or login required.</p>
+            <div class="copyright">© 2025 KazuX. All rights reserved.</div>
+          </div>
+        </footer>
       </div>
-    </div>
+
+      <div id="settingsPage" class="settings-page">
+        <div class="container">
+          <div class="settings-header">
+            <button id="backBtn" class="icon-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <h2>Settings</h2>
+          </div>
+
+          <div class="settings-section">
+            <h3>Profile</h3>
+            <div class="settings-list">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Profile guard</p>
+                  <p class="settings-item-desc">Protect your profile picture</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>Security</h3>
+            <div class="settings-list">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Key</p>
+                  <p class="settings-item-desc">Copy in-app key</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Rotate key</p>
+                  <p class="settings-item-desc">Rotate in-app key</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Access token</p>
+                  <p class="settings-item-desc">Copy account access token</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>More</h3>
+            <div class="settings-list">
+              <div class="settings-item">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Facebook</p>
+                  <p class="settings-item-desc">Follow our Facebook Page</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>Other</h3>
+            <div class="settings-list">
+              <div class="settings-item" id="switchAccountBtn">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Switch account</p>
+                  <p class="settings-item-desc">Switch between your Facebook accounts</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <div class="settings-item" id="logoutBtn">
+                <div class="settings-item-content">
+                  <p class="settings-item-title">Log out</p>
+                  <p class="settings-item-desc">Log out current account</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -853,7 +693,7 @@
         <div class="modal-features">
           <div class="modal-feature">
             <div class="modal-feature-icon">
-              <i data-lucide="sparkles" class="ico"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5"/><path d="M12 12v9"/><path d="M12 12L4 7.5"/></svg>
             </div>
             <div class="modal-feature-text">
               <strong>High Features</strong>
@@ -862,7 +702,7 @@
           </div>
           <div class="modal-feature">
             <div class="modal-feature-icon">
-              <i data-lucide="message-circle" class="ico"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <div class="modal-feature-text">
               <strong>Global Chat</strong>
@@ -871,8 +711,8 @@
           </div>
         </div>
         <div style="display:grid;gap:10px;">
-          <a href="Lara_1.5.1.apk" class="btn btn-primary">
-            <i data-lucide="download" class="ico"></i>
+          <a href="#" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download Now
           </a>
           <button class="btn btn-secondary" id="continueWeb">Continue on Web</button>
@@ -880,15 +720,11 @@
       </div>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       const html = document.documentElement;
       const themeToggle = document.getElementById('themeToggle');
-      const openDrawer = document.getElementById('openDrawer');
-      const closeDrawer = document.getElementById('closeDrawer');
-      const drawer = document.getElementById('drawer');
-      const modal = document.getElementById('modal');
       const downloadAppBtn = document.getElementById('downloadAppBtn');
+      const modal = document.getElementById('modal');
       const continueWeb = document.getElementById('continueWeb');
       const loginCard = document.getElementById('loginCard');
       const loginForm = document.getElementById('loginForm');
@@ -911,6 +747,7 @@
       
       let selectedReaction = null;
       let countdown = null;
+      let isDailyLimit = false;
 
       function getTheme() {
         return localStorage.getItem('theme') || 'dark';
@@ -918,30 +755,15 @@
       function setTheme(theme) {
         html.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        themeToggle.innerHTML = theme === 'dark' 
-          ? '<i data-lucide="moon" class="ico"></i>'
-          : '<i data-lucide="sun" class="ico"></i>';
-        lucide.createIcons();
+        const icon = theme === 'dark' 
+          ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+          : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+        themeToggle.innerHTML = icon;
       }
       themeToggle.addEventListener('click', () => {
         setTheme(getTheme() === 'dark' ? 'light' : 'dark');
       });
       setTheme(getTheme());
-
-      openDrawer.addEventListener('click', () => {
-        drawer.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
-      closeDrawer.addEventListener('click', () => {
-        drawer.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-      drawer.addEventListener('click', (e) => {
-        if (e.target === drawer) {
-          drawer.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      });
 
       downloadAppBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -984,17 +806,44 @@
           loginBtn.disabled = true;
           loginBtn.innerHTML = '<span class="spinner"></span> Loading...';
           
-          const nameMatch = cookie.match(/c_user=(\d+)/);
-          const userId = nameMatch ? nameMatch[1] : 'User';
-          
-          const user = {
-            cookie: cookie,
-            name: userId,
-            avatar: `https://graph.facebook.com/${userId}/picture?type=large`,
-            cooldownEnd: null
-          };
-          localStorage.setItem('kazux_user', JSON.stringify(user));
-          showUserPanel(user);
+          try {
+            const response = await fetch('/api/get_profile', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ cookie })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              const user = {
+                cookie: cookie,
+                name: data.name,
+                avatar: data.avatar,
+                cooldownEnd: null,
+                dailyLimitEnd: null
+              };
+              localStorage.setItem('kazux_user', JSON.stringify(user));
+              showUserPanel(user);
+            } else {
+              showAlert('error', 'Failed to fetch profile. Using fallback.');
+              const nameMatch = cookie.match(/c_user=(\d+)/);
+              const userId = nameMatch ? nameMatch[1] : 'User';
+              const user = {
+                cookie: cookie,
+                name: userId,
+                avatar: null,
+                cooldownEnd: null,
+                dailyLimitEnd: null
+              };
+              localStorage.setItem('kazux_user', JSON.stringify(user));
+              showUserPanel(user);
+            }
+          } catch (error) {
+            showAlert('error', 'Network error.');
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = 'Continue';
+          }
         }
       });
 
@@ -1006,18 +855,20 @@
         if (user.avatar) {
           userAvatar.innerHTML = `<img src="${user.avatar}" alt="Avatar">`;
         } else {
-          userAvatar.innerHTML = '<i data-lucide="user" class="ico" style="width:40px;height:40px;"></i>';
+          userAvatar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
         }
         
         userName.textContent = user.name || 'User';
         
-        if (user.cooldownEnd && Date.now() < user.cooldownEnd) {
+        if (user.dailyLimitEnd && Date.now() < user.dailyLimitEnd) {
+          isDailyLimit = true;
+          startCooldown(user.dailyLimitEnd);
+        } else if (user.cooldownEnd && Date.now() < user.cooldownEnd) {
+          isDailyLimit = false;
           startCooldown(user.cooldownEnd);
         } else {
-          userStatus.textContent = 'Can use again in: 0h 0m 0s';
+          userStatus.textContent = 'Ready to use';
         }
-        
-        lucide.createIcons();
       }
 
       logoutBtn.addEventListener('click', () => {
@@ -1056,7 +907,7 @@
         const userData = JSON.parse(localStorage.getItem('kazux_user'));
         if (!userData) return;
 
-        if (userData.cooldownEnd && Date.now() < userData.cooldownEnd) {
+        if ((userData.cooldownEnd && Date.now() < userData.cooldownEnd) || (userData.dailyLimitEnd && Date.now() < userData.dailyLimitEnd)) {
           showAlert('error', 'You are still in cooldown. Please wait.');
           return;
         }
@@ -1084,17 +935,32 @@
 
           const data = await response.json();
 
-          if (data.status === 'cooldown') {
-            const minutes = data.error.match(/\d+/)[0];
-            const cooldownEnd = Date.now() + (minutes * 60000);
-            userData.cooldownEnd = cooldownEnd;
+          if (data.status === 'cooldown' && data.error.includes('daily limit')) {
+            const hours = data.error.match(/(\d+)\s+hour/);
+            const minutes = data.error.match(/(\d+)\s+minute/);
+            const totalMinutes = (hours ? parseInt(hours[1]) * 60 : 0) + (minutes ? parseInt(minutes[1]) : 0);
+            const dailyLimitEnd = Date.now() + (totalMinutes * 60000);
+            userData.dailyLimitEnd = dailyLimitEnd;
+            userData.cooldownEnd = null;
             localStorage.setItem('kazux_user', JSON.stringify(userData));
+            isDailyLimit = true;
+            startCooldown(dailyLimitEnd);
+            showAlert('error', data.error);
+          } else if (data.status === 'cooldown') {
+            const minutes = data.error.match(/(\d+)\s+minute/);
+            const cooldownEnd = Date.now() + (minutes ? parseInt(minutes[1]) * 60000 : 600000);
+            userData.cooldownEnd = cooldownEnd;
+            userData.dailyLimitEnd = null;
+            localStorage.setItem('kazux_user', JSON.stringify(userData));
+            isDailyLimit = false;
             startCooldown(cooldownEnd);
             showAlert('error', data.error);
           } else if (data.success) {
             const cooldownEnd = Date.now() + (10 * 60000);
             userData.cooldownEnd = cooldownEnd;
+            userData.dailyLimitEnd = null;
             localStorage.setItem('kazux_user', JSON.stringify(userData));
+            isDailyLimit = false;
             startCooldown(cooldownEnd);
             showAlert('success', data.message);
             reactForm.reset();
@@ -1107,8 +973,7 @@
           showAlert('error', 'Network error. Please try again.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i data-lucide="clock" class="ico"></i> Limit';
-          lucide.createIcons();
+          submitBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Limit';
         }
       });
 
@@ -1119,16 +984,26 @@
           const remaining = endTime - Date.now();
           if (remaining <= 0) {
             clearInterval(countdown);
-            userStatus.textContent = 'Can use again in: 0h 0m 0s';
+            userStatus.textContent = 'Ready to use';
             submitBtn.disabled = false;
             const userData = JSON.parse(localStorage.getItem('kazux_user'));
-            userData.cooldownEnd = null;
+            if (isDailyLimit) {
+              userData.dailyLimitEnd = null;
+            } else {
+              userData.cooldownEnd = null;
+            }
             localStorage.setItem('kazux_user', JSON.stringify(userData));
+            isDailyLimit = false;
           } else {
             const hours = Math.floor(remaining / 3600000);
             const minutes = Math.floor((remaining % 3600000) / 60000);
-            const seconds = Math.floor((remaining % 60000) / 1000);
-            userStatus.textContent = `Can use again in: ${hours}h ${minutes}m ${seconds}s`;
+            
+            if (isDailyLimit) {
+              userStatus.textContent = `Come back in: ${hours}h ${minutes}m`;
+            } else {
+              const seconds = Math.floor((remaining % 60000) / 1000);
+              userStatus.textContent = `Can use again in: ${hours}h ${minutes}m ${seconds}s`;
+            }
             submitBtn.disabled = true;
           }
         }
@@ -1152,7 +1027,6 @@
       }
 
       checkLogin();
-      lucide.createIcons();
 
       setTimeout(() => {
         if (!sessionStorage.getItem('modal_shown')) {
