@@ -641,11 +641,9 @@
         </div>
 
         <main>
-          <!-- Main Page -->
           <div id="mainPage">
             <section>
               <div class="container">
-                <!-- Login Form -->
                 <div id="loginCard" class="card">
                   <h2>Enter Your Cookie</h2>
                   <p>Please enter your Facebook cookie to continue. Use a test account to prevent loss of important information.</p>
@@ -666,7 +664,6 @@
                   </form>
                 </div>
 
-                <!-- User Panel -->
                 <div id="userPanel" style="display: none;">
                   <div class="user-card">
                     <div class="user-avatar" id="userAvatar"></div>
@@ -728,7 +725,6 @@
             </footer>
           </div>
 
-          <!-- Settings Page -->
           <div id="settingsPage" class="settings-page">
             <div class="container">
               <div class="settings-header">
@@ -845,7 +841,6 @@
       </div>
     </div>
 
-    <!-- Download Modal -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -989,7 +984,6 @@
           loginBtn.disabled = true;
           loginBtn.innerHTML = '<span class="spinner"></span> Loading...';
           
-          // Extract name from cookie (simplified)
           const nameMatch = cookie.match(/c_user=(\d+)/);
           const userId = nameMatch ? nameMatch[1] : 'User';
           
